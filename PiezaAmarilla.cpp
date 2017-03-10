@@ -12,9 +12,9 @@ PiezaAmarilla::PiezaAmarilla(char color, int posx, int posy) : Pieza(color, posx
 
 }
 
-void PiezaAmarilla::resetPos(){
-  //posx = posicion x de inicio de pieza azul;
-  //posy = posicion y de inicio de pieza azul;
+void PiezaAmarilla::ingresarPieza(){
+  //posx = posicion x de inicio de pieza amarilla;
+  //posy = posicion y de inicio de pieza amarilla;
 }
 
 void PiezaAmarilla::comer(Pieza* pieza){
@@ -25,4 +25,14 @@ void PiezaAmarilla::comer(Pieza* pieza){
   }else if(typeid(pieza).name() == typeid(PiezaVerde).name()){
 
   }
+}
+
+bool PiezaAmarilla::zonaFinal(){
+  if(vuelta = 1 && )
+}
+
+
+void PiezaAmarilla::mover(int x, int y){
+  posx = x;
+  posy = y;
 }

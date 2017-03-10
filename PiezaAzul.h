@@ -6,7 +6,10 @@ public:
   PiezaAzul();
   PiezaAzul(char, int, int);
 
-  virtual void comer(Pieza* pieza);
+  void resetPos();
+  void comer(Pieza*);
+  bool zonaFinal();
+  void mover(int, int);
 
   ~Pieza();
-}
+};

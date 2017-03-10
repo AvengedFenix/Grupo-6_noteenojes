@@ -28,20 +28,14 @@ int Pieza::getPosY(){
   return posy;
 }
 
-void Pieza::resetPos(Pieza* pieza){
-  if(typeid(pieza).name() == typeid(PiezaAzul).name()){
+void Pieza::ingresarPieza(){
 
-  }else if(typeid(pieza).name() == typeid(PiezaRoja).name()){
-
-  }else if(typeid(pieza).name() == typeid(PiezaAmarilla).name()){
-
-  }else if(typeid(pieza).name() == typeid(PiezaVerde).name()){
-
-  }
 }
 
 void Pieza::comer(Pieza* pieza){
-  if(typeid(pieza).name() == typeid(PiezaRoja).name()){
-    //mover pieza a posicion de inicio
-  }
+
+}
+
+bool Pieza::zonaFinal(){
+  
 }

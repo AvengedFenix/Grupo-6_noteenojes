@@ -1,7 +1,7 @@
 #pragma once
 
 class Pieza(){
-private:
+protected:
   char color;//b = blue, r = red, y = yellow, g = green
   int posx;
   int posy;
@@ -18,8 +18,8 @@ public:
   virtual void setPosY(int);
 
 
-  virtual void resetPos(Pieza*);//mover pieza a posicion de inicio
+  virtual void ingresarPieza();//mover pieza a posicion de inicio
   virtual void comer(Pieza*);//comer pieza
-  virtual bool zonaFinal(Pieza*);//ingreso a zona final
+  virtual bool zonaFinal();//ingreso a zona final
   ~Pieza();
 };

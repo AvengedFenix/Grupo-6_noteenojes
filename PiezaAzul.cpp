@@ -12,7 +12,7 @@ PiezaAzul::PiezaAzul(char color, int posx, int posy) : Pieza(color, posx, posy){
 
 }
 
-void PiezaAzul::resetPos(){
+void PiezaAzul::ingresarPieza(){
   //posx = posicion x de inicio de pieza azul;
   //posy = posicion y de inicio de pieza azul;
 }
@@ -25,4 +25,17 @@ void PiezaAzul::comer(Pieza* pieza){
   }else if(typeid(pieza).name() == typeid(PiezaVerde).name()){
 
   }
+}
+
+bool PiezaAzul::zonaFinal(){
+  if(vuelta = 1 && posy ==7){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+void PiezaAzul::mover(int x, int y){
+  posx = x;
+  posy = y;
 }

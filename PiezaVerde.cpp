@@ -12,9 +12,9 @@ PiezaVerde::PiezaVerde(char color, int posx, int posy) : Pieza(color, posx, posy
 
 }
 
-void PiezaVerde::resetPos(){
-  //posx = posicion x de inicio de pieza azul;
-  //posy = posicion y de inicio de pieza azul;
+void PiezaVerde::ingresarPieza(){
+  //posx = posicion x de inicio de pieza verde;
+  //posy = posicion y de inicio de pieza verde;
 }
 
 void PiezaVerde::comer(Pieza* pieza){
@@ -25,4 +25,17 @@ void PiezaVerde::comer(Pieza* pieza){
   }else if(typeid(pieza).name() == typeid(PiezaAzul).name()){
 
   }
+}
+
+bool PiezaVerde::zonaFinal(){
+  if(vuelta = 1 && posy ==7){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+void PiezaVerde::mover(int x, int y){
+  posx = x;
+  posy = y;
 }

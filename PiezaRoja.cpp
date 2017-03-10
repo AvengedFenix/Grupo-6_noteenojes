@@ -26,3 +26,11 @@ void PiezaRoja::comer(Pieza* pieza){
 
   }
 }
+
+bool PiezaRoja::zonaFinal(){
+  if(vuelta = 1 && posx == 7){
+    return true;
+  }else{
+    return false;
+  }
+}
