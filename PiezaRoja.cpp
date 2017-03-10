@@ -13,8 +13,8 @@ PiezaRoja::PiezaRoja(char color, int posx, int posy) : Pieza(color, posx, posy){
 }
 
 void PiezaRoja::resetPos(){
-  //posx = posicion x de inicio de pieza azul;
-  //posy = posicion y de inicio de pieza azul;
+  posx = 14;
+  posy = 0;
 }
 
 void PiezaRoja::comer(Pieza* pieza){
@@ -28,7 +28,7 @@ void PiezaRoja::comer(Pieza* pieza){
 }
 
 bool PiezaRoja::zonaFinal(){
-  if(vuelta = 1 && posx == 7){
+  if(vuelta vuelta > 62 && posx == 7){
     return true;
   }else{
     return false;

@@ -28,7 +28,11 @@ void PiezaAmarilla::comer(Pieza* pieza){
 }
 
 bool PiezaAmarilla::zonaFinal(){
-  if(vuelta = 1 && )
+  if(vuelta > 62 && posy == 7){
+    return true;
+  }else{
+    return false;
+  }
 }
 
 
