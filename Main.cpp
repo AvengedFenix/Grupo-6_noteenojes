@@ -1,15 +1,23 @@
 #include <ncurses.h>
 #include <vector>
-//#include "Pieza.h"
 #include <time.h>
 #include <stdlib.h>
 
+#include "Pieza.h"
+#include "PiezaRoja.h"
+#include "PiezaAmarilla.h"
+#include "PiezaVerde.h"
+#include "PiezaAzul.h"
+#include <sstream>
+
 void board();
 int lanzarDados();
+void validacionesJ1(vector<Pieza>,char);
 
 int main() {
     board();
-    //vector<Pieza> p;
+    vector<Pieza*> p;
+    vector<Pieza*> p2;
     init_pair(1, COLOR_BLUE, COLOR_WHITE);
     mvprintw(20, 5, "Jugador 1, escriba el color que desea: R/G/B/Y");
     char C1;
@@ -20,22 +28,22 @@ int main() {
     }
     if (C1 == 'R' || C1 == 'r') {
         for (int i = 0; i < 4; i++) {
-            //p.push_back(new PiezaRoja(C1, 0, 14));
+            p.push_back(new PiezaRoja(C1, 0, 14));
         }
     }
     if (C1 == 'G' || C1 == 'g') {
         for (int i = 0; i < 4; i++) {
-            //p.push_back(new PiezaRoja(C1, 0, 0));
+            p.push_back(new PiezaVerde(C1, 0, 0));
         }
     }
     if (C1 == 'B' || C1 == 'b') {
         for (int i = 0; i < 4; i++) {
-            //p.push_back(new PiezaRoja(C1, 14, 14));
+            p.push_back(new PiezaAzul(C1, 14, 14));
         }
     }
     if (C1 == 'Y' || C1 == 'y') {
         for (int i = 0; i < 4; i++) {
-            //p.push_back(new PiezaRoja(C1, 14, 0));
+            p.push_back(new PiezaAmarilla(C1, 14, 0));
         }
     }
     init_pair(2, COLOR_RED, COLOR_WHITE);
@@ -53,24 +61,25 @@ int main() {
     }
     if (C2 == 'R' || C2 == 'r') {
         for (int i = 0; i < 4; i++) {
-            //p.push_back(new PiezaRoja(C2, 0, 14));
+            p2.push_back(new PiezaRoja(C2, 0, 14));
         }
     }
     if (C2 == 'G' || C2 == 'g') {
         for (int i = 0; i < 4; i++) {
-            //p.push_back(new PiezaRoja(C2, 0, 0));
+            p2.push_back(new PiezaVerde(C2, 0, 0));
         }
     }
     if (C2 == 'B' || C2 == 'b') {
         for (int i = 0; i < 4; i++) {
-            //p.push_back(new PiezaRoja(C2, 14, 14));
+            p2.push_back(new PiezaAzul(C2, 14, 14));
         }
     }
     if (C2 == 'Y' || C2 == 'y') {
         for (int i = 0; i < 4; i++) {
-            //p.push_back(new PiezaRoja(C2, 14, 0));
+            p2.push_back(new PiezaAmarilla(C2, 14, 0));
         }
     }
+    validacionesJ1(p, C1);
     refresh();
     endwin();
     return 0;
@@ -173,16 +182,6 @@ void board(){
     mvprintw(12,14, "+");
     mvprintw(13,14, "+");
 
-
-    /*for (int i = 0; i < 14; i++) {
-        for (int j = 0; i < 14; i++) {
-            if (i == 0 && j <7 && i == 0 && j!=0 || i == 0 && j > 7 && i == 0 && j!=14 ) {
-                mvprintw(i,j, "=");
-            }  else if (i > 0 && j == 0 && i != 7 && j == 0 && i > 0 && j == 14 && i != 7 && j == 14) {
-
-            }
-        }
-    }*/
     refresh();
     getch();
     endwin();
@@ -192,4 +191,163 @@ int lanzarDados(){
     srand(time(0));
     int r1 = rand() % 7;
     return r1;
+}
+
+void validacionesJ1(vector<Pieza> J1, char C1) {
+    int r1 = lanzarDados();
+    int r2 = lanzarDados();
+
+    init_pair(1, COLOR_BLUE, COLOR_WHITE);
+    init_pair(2, COLOR_GREEN,COLOR_BLACK);
+    init_pair(3, COLOR_RED,COLOR_BLACK);
+    init_pair(4, COLOR_BLUE,COLOR_BLACK);
+    init_pair(5, COLOR_YELLOW,COLOR_BLACK);
+    init_pair(6, COLOR_WHITE, COLOR_BLACK);
+
+    attron(COLOR_PAIR(1));
+
+    mvprintw(20,5, "Los Dados del jugador uno fueron: %d y %d",r1,r2);
+    stringstream ss;
+    for (int i = 0; i < J1.size(); i++) {
+        ss << i<<". Posicion x: "<<J1[i]->getPosX()<< " Posicion y: " << J1[i]->getPosY();
+    }
+    int suma = r1 + r2;
+    mvprintw(25, 5, ss.str());
+    attroff(COLOR_PAIR(1));
+
+    int pSelect = getch();
+    while (P1[pSelect]->getPosY() == 7 && P1[pSelect]->getPosX() == 7) {
+        mvprintw(25, 5, "No puede elegir esa posicion porque ya llego a su destino, vuelva a ingresar otra Pieza");
+        pSelect = getch();
+    }
+    if (C1 == 'R' || C1 == 'r') {
+        while(suma > 0){
+            if(P1[pSelect]->getVuelta() >= 0 && P1[pSelect]->getVuelta()<14 && P1[pSelect]->zonaFinal() == false){
+                P1[pSelect]->setPosY(P1[pSelect]->getPosY() - 1);
+                P1[pSelect]->setPosX(0);
+            }
+            if (P1[pSelect]->getVuelta() >= 14 && P1[pSelect]->getVuelta()<28 && P1[pSelect]->zonaFinal() == false) {
+                P1[pSelect]->setPosX(P1[pSelect]->getPosX() + 1);
+                P1[pSelect]->setPosY(0);
+
+            }
+            if (P1[pSelect]->getVuelta() >= 28 && P1[pSelect]->getVuelta()<42 && P1[pSelect]->zonaFinal() == false) {
+                P1[pSelect]->setPosY(P1[pSelect]->getPosY() + 1);
+                P1[pSelect]->setPosX(14);
+            }
+            if (P1[pSelect]->getVuelta() >= 42 && P1[pSelect]->getVuelta()<56 && P1[pSelect]->zonaFinal() == false) {
+                P1[pSelect]->setPosX(P1[pSelect]->getPosX() - 1);
+                P1[pSelect]->setPosY(14);
+            }
+            if(P1[pSelect]->getVuelta() >= 56 && P1[pSelect]->getVuelta()<63 && P1[pSelect]->zonaFinal() == false){
+                P1[pSelect]->setPosY(P1[pSelect]->getPosY() - 1);
+                P1[pSelect]->setPosX(0);
+            }
+            if (P1[pSelect]->getVuelta() == 63) {
+                P1[pSelect]->setPosX(P1[pSelect]->getPosX() + 1);
+            }
+            P1[pSelect]->setVuelta(P1[pSelect]->getVuelta()+1);
+            suma--;
+            attron(COLOR_PAIR(3));
+            mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), C1);
+            attroff(COLOR_PAIR(3));
+        }
+
+    }else if (C1 == 'G' || C1 == 'g') {
+        while(suma > 0){
+            if(P1[pSelect]->getVuelta() >= 0 && P1[pSelect]->getVuelta()<14 && P1[pSelect]->zonaFinal() == false){
+                P1[pSelect]->setPosX(P1[pSelect]->getPosX() + 1);
+                P1[pSelect]->setPosY(0);
+            }
+            if (P1[pSelect]->getVuelta() >= 14 && P1[pSelect]->getVuelta()<28 && P1[pSelect]->zonaFinal() == false) {
+                P1[pSelect]->setPosY(P1[pSelect]->getPosY() + 1);
+                P1[pSelect]->setPosX(14);
+
+            }
+            if (P1[pSelect]->getVuelta() >= 28 && P1[pSelect]->getVuelta()<42 && P1[pSelect]->zonaFinal() == false) {
+                P1[pSelect]->setPosX(P1[pSelect]->getPosX() - 1);
+                P1[pSelect]->setPosY(14);
+            }
+            if (P1[pSelect]->getVuelta() >= 42 && P1[pSelect]->getVuelta()<56 && P1[pSelect]->zonaFinal() == false) {
+                P1[pSelect]->setPosY(P1[pSelect]->getPosY() - 1);
+                P1[pSelect]->setPosX(0);
+            }
+            if(P1[pSelect]->getVuelta() >= 56 && P1[pSelect]->getVuelta()<63 && P1[pSelect]->zonaFinal() == false){
+                P1[pSelect]->setPosX(P1[pSelect]->getPosX() + 1);
+                P1[pSelect]->setPosY(0);
+            }
+            if (P1[pSelect]->getVuelta() == 63) {
+                P1[pSelect]->setPosY(P1[pSelect]->getPosY() + 1);
+            }
+            P1[pSelect]->setVuelta(P1[pSelect]->getVuelta()+1);
+            suma--;
+            attron(COLOR_PAIR(2));
+            mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), C1);
+            attroff(COLOR_PAIR(2));
+        }
+    }else if (C1 == 'B' || C1 == 'b') {
+        while(suma > 0){
+            if(P1[pSelect]->getVuelta() >= 0 && P1[pSelect]->getVuelta()<14 && P1[pSelect]->zonaFinal() == false){
+                P1[pSelect]->setPosX(P1[pSelect]->getPosX() - 1);
+                P1[pSelect]->setPosY(14);
+            }
+            if (P1[pSelect]->getVuelta() >= 14 && P1[pSelect]->getVuelta()<28 && P1[pSelect]->zonaFinal() == false) {
+                P1[pSelect]->setPosY(P1[pSelect]->getPosY() - 1);
+                P1[pSelect]->setPosX(0);
+
+            }
+            if (P1[pSelect]->getVuelta() >= 28 && P1[pSelect]->getVuelta()<42 && P1[pSelect]->zonaFinal() == false) {
+                P1[pSelect]->setPosX(P1[pSelect]->getPosX() + 1);
+                P1[pSelect]->setPosY(0);
+            }
+            if (P1[pSelect]->getVuelta() >= 42 && P1[pSelect]->getVuelta()<56 && P1[pSelect]->zonaFinal() == false) {
+                P1[pSelect]->setPosY(P1[pSelect]->getPosY() + 1);
+                P1[pSelect]->setPosX(14);
+            }
+            if(P1[pSelect]->getVuelta() >= 56 && P1[pSelect]->getVuelta()<63 && P1[pSelect]->zonaFinal() == false){
+                P1[pSelect]->setPosX(P1[pSelect]->getPosX() - 1);
+                P1[pSelect]->setPosY(14);
+            }
+            if (P1[pSelect]->getVuelta() == 63) {
+                P1[pSelect]->setPosY(P1[pSelect]->getPosY() + 1);
+            }
+            P1[pSelect]->setVuelta(P1[pSelect]->getVuelta()+1);
+
+            suma--;
+            attron(COLOR_PAIR(4));
+            mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), C1);
+            attroff(COLOR_PAIR(4));
+        }
+    }else if (C1 == 'Y' || C1 == 'y') {
+        while(suma > 0){
+            if(P1[pSelect]->getVuelta() >= 0 && P1[pSelect]->getVuelta()<14 && P1[pSelect]->zonaFinal() == false){
+                P1[pSelect]->setPosY(P1[pSelect]->getPosY() + 1);
+                P1[pSelect]->setPosX(14);
+            }
+            if (P1[pSelect]->getVuelta() >= 14 && P1[pSelect]->getVuelta()<28 && P1[pSelect]->zonaFinal() == false) {
+                P1[pSelect]->setPosX(P1[pSelect]->getPosX() - 1);
+                P1[pSelect]->setPosY(14);
+
+            }
+            if (P1[pSelect]->getVuelta() >= 28 && P1[pSelect]->getVuelta()<42 && P1[pSelect]->zonaFinal() == false) {
+                P1[pSelect]->setPosY(P1[pSelect]->getPosY() - 1);
+                P1[pSelect]->setPosX(0);
+            }
+            if (P1[pSelect]->getVuelta() >= 42 && P1[pSelect]->getVuelta()<56 && P1[pSelect]->zonaFinal() == false) {
+                P1[pSelect]->setPosX(P1[pSelect]->getPosX() + 1);
+                P1[pSelect]->setPosY(0);
+            }
+            if(P1[pSelect]->getVuelta() >= 56 && P1[pSelect]->getVuelta()<63 && P1[pSelect]->zonaFinal() == false){
+                P1[pSelect]->setPosY(P1[pSelect]->getPosY() + 1);
+                P1[pSelect]->setPosX(14);
+            }
+            if (P1[pSelect]->getVuelta() == 63) {
+                P1[pSelect]->setPosX(P1[pSelect]->getPosX() - 1);
+            }
+            P1[pSelect]->setVuelta(P1[pSelect]->getVuelta()+1);
+            suma--;
+            attron(COLOR_PAIR(5));
+            mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), C1);
+            attroff(COLOR_PAIR(5));
+        }
 }
