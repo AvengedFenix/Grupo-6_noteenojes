@@ -2,7 +2,7 @@
 #include <vector>
 #include <time.h>
 #include <stdlib.h>
-
+#include <string>
 #include "Pieza.h"
 #include "PiezaRoja.h"
 #include "PiezaAmarilla.h"
@@ -10,9 +10,11 @@
 #include "PiezaAzul.h"
 #include <sstream>
 
+using namespace std;
+
 void board();
 int lanzarDados();
-void validacionesJ1(vector<Pieza>,char);
+void validacionesJ1(vector<Pieza*>,char);
 
 int main() {
     board();
@@ -193,7 +195,7 @@ int lanzarDados(){
     return r1;
 }
 
-void validacionesJ1(vector<Pieza> J1, char C1) {
+void validacionesJ1(vector<Pieza*> P1, char C1) {
     int r1 = lanzarDados();
     int r2 = lanzarDados();
 
@@ -208,8 +210,8 @@ void validacionesJ1(vector<Pieza> J1, char C1) {
 
     mvprintw(20,5, "Los Dados del jugador uno fueron: %d y %d",r1,r2);
     stringstream ss;
-    for (int i = 0; i < J1.size(); i++) {
-        ss << i<<". Posicion x: "<<J1[i]->getPosX()<< " Posicion y: " << J1[i]->getPosY();
+    for (int i = 0; i < P1.size(); i++) {
+        ss << i<<". Posicion x: "<<P1[i]->getPosX()<< " Posicion y: " << P1[i]->getPosY();
     }
     int suma = r1 + r2;
     mvprintw(25, 5, ss.str());
@@ -249,7 +251,7 @@ void validacionesJ1(vector<Pieza> J1, char C1) {
             P1[pSelect]->setVuelta(P1[pSelect]->getVuelta()+1);
             suma--;
             attron(COLOR_PAIR(3));
-            mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), C1);
+            mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), "%c",C1);
             attroff(COLOR_PAIR(3));
         }
 
