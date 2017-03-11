@@ -1,7 +1,7 @@
 #pragma once
 
-class Pieza(){
-private:
+class Pieza{
+protected:
   char color;//b = blue, r = red, y = yellow, g = green
   int posx;
   int posy;
@@ -13,13 +13,15 @@ public:
   virtual char getColor();
   virtual int getPosX();
   virtual int getPosY();
+  virtual int getVuelta();
+
 
   virtual void setPosX(int);
   virtual void setPosY(int);
+  virtual void setVuelta(int);
 
-
-  virtual void resetPos(Pieza*);//mover pieza a posicion de inicio
+  virtual void ingresarPieza();//mover pieza a posicion de inicio
   virtual void comer(Pieza*);//comer pieza
-  virtual bool zonaFinal(Pieza*);//ingreso a zona final
-  ~Pieza();
+  virtual bool zonaFinal();//ingreso a zona final
+  virtual ~Pieza();
 };

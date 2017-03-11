@@ -1,12 +1,15 @@
 #pragma once
-#inclide "Pieza.h"
+#include "Pieza.h"
 
 class PiezaAmarilla : public Pieza{
 public:
   PiezaAmarilla();
   PiezaAmarilla(char, int, int);
 
-  virtual void comer(Pieza* pieza);
+  void ingresarPieza();
+  void comer(Pieza* pieza);
+  bool zonaFinal();
+  void mover(int, int);
 
-  ~Pieza();
-}
+  ~PiezaAmarilla();
+};
