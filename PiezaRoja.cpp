@@ -1,8 +1,8 @@
 #include "PiezaRoja.h"
-#include "PiezaRoja.h"
-#include "PiezaRoja.h"
 #include "PiezaVerde.h"
 #include "PiezaAmarilla.h"
+#include "PiezaAzul.h"
+#include <typeinfo>
 
 PiezaRoja::PiezaRoja(){
 
@@ -18,19 +18,32 @@ void PiezaRoja::resetPos(){
 }
 
 void PiezaRoja::comer(Pieza* pieza){
-  if(typeid(pieza).name() == typeid(PiezaAzul).name()){
+  /*if(typeid(pieza).name() == typeid(PiezaAzul).name()){
 
   }else if(typeid(pieza).name() == typeid(PiezaAmarilla).name()){
 
   }else if(typeid(pieza).name() == typeid(PiezaVerde).name()){
 
-  }
+  }*/
 }
 
 bool PiezaRoja::zonaFinal(){
-  if(vuelta vuelta > 62 && posx == 7){
+  if(vuelta > 62 && posx == 7){
     return true;
   }else{
     return false;
   }
+}
+
+void PiezaRoja::ingresarPieza(){
+
+}
+
+void PiezaRoja::mover(int x, int y){
+  posx = x;
+  posy = y;
+}
+
+PiezaRoja::~PiezaRoja(){
+
 }

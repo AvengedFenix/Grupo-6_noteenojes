@@ -1,5 +1,5 @@
 #pragma once
-#inclide "Pieza.h"
+#include "Pieza.h"
 
 class PiezaRoja : public Pieza{
 public:
@@ -10,5 +10,6 @@ public:
   void comer(Pieza* pieza);
   bool zonaFinal();
   void mover(int, int);
-  ~Pieza();
+  void resetPos();
+  ~PiezaRoja();
 };
