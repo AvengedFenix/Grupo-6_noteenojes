@@ -21,13 +21,13 @@ int main() {
     vector<Pieza*> p;
     vector<Pieza*> p2;
     init_pair(1, COLOR_BLUE, COLOR_WHITE);
-    mvprintw(20, 5, "Jugador 1, escriba el color que desea: R/G/B/Y");
+    mvprintw(20, 5, "Jugador 1, escriba el color que desea: R/G/B/Y : ");
     char C1;
     C1 = getch();
-    while (C1 != 'R' || C1 != 'r' || C1 != 'G' || C1 != 'g' || C1 != 'B' || C1 != 'b' || C1 != 'Y' || C1 != C1 != 'y') {
+    /*while (C1 != 'R' || C1 != 'r' || C1 != 'G' || C1 != 'g' || C1 != 'B' || C1 != 'b' || C1 != 'Y' || C1 != C1 != 'y') {
         mvprintw(20, 5, "Jugador 1, Ese color no se puede elegir: R/G/B/Y");
         C1 = getch();
-    }
+    }*/
     if (C1 == 'R' || C1 == 'r') {
         for (int i = 0; i < 4; i++) {
             p.push_back(new PiezaRoja(C1, 0, 14));
@@ -50,17 +50,17 @@ int main() {
     }
     init_pair(2, COLOR_RED, COLOR_WHITE);
     refresh();
-    mvprintw(20, 5, "Jugador 2, escriba el color que desea: R/G/B/Y");
+    mvprintw(20, 5, "Jugador 2, escriba el color que desea: R/G/B/Y : ");
     char C2;
     C2 = getch();
-    while (C2 == C1) {
+    /*while (C2 == C1) {
         mvprintw(20, 5, "Jugador 2, ese color ya lo agarro el jugador 1: ");
         C2 = getch();
-    }
-    while (C2 != 'R' || C2 != 'r' || C2 != 'G' || C2 != 'g' || C2 != 'B' || C2 != 'b' || C2 != 'Y' || C2 != C2 != 'y') {
+    }*/
+    /*while (C2 != 'R' || C2 != 'r' || C2 != 'G' || C2 != 'g' || C2 != 'B' || C2 != 'b' || C2 != 'Y' || C2 != C2 != 'y') {
         mvprintw(20, 5, "Jugador 1, Ese color no se puede elegir: R/G/B/Y");
         C2 = getch();
-    }
+    }*/
     if (C2 == 'R' || C2 == 'r') {
         for (int i = 0; i < 4; i++) {
             p2.push_back(new PiezaRoja(C2, 0, 14));
@@ -82,6 +82,7 @@ int main() {
         }
     }
     validacionesJ1(p, C1);
+    validacionesJ1(p2, C2);
     refresh();
     endwin();
     return 0;
@@ -214,7 +215,7 @@ void validacionesJ1(vector<Pieza*> P1, char C1) {
         ss << i<<". Posicion x: "<<P1[i]->getPosX()<< " Posicion y: " << P1[i]->getPosY();
     }
     int suma = r1 + r2;
-    mvprintw(25, 5, ss.str());
+    mvprintw(25, 5, "%f",ss.str());
     attroff(COLOR_PAIR(1));
 
     int pSelect = getch();
@@ -250,11 +251,11 @@ void validacionesJ1(vector<Pieza*> P1, char C1) {
             }
             P1[pSelect]->setVuelta(P1[pSelect]->getVuelta()+1);
             suma--;
-            attron(COLOR_PAIR(3));
-            mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), "%c",C1);
-            attroff(COLOR_PAIR(3));
-        }
 
+        }
+        attron(COLOR_PAIR(3));
+        mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), "%c",C1);
+        attroff(COLOR_PAIR(3));
     }else if (C1 == 'G' || C1 == 'g') {
         while(suma > 0){
             if(P1[pSelect]->getVuelta() >= 0 && P1[pSelect]->getVuelta()<14 && P1[pSelect]->zonaFinal() == false){
@@ -283,10 +284,11 @@ void validacionesJ1(vector<Pieza*> P1, char C1) {
             }
             P1[pSelect]->setVuelta(P1[pSelect]->getVuelta()+1);
             suma--;
-            attron(COLOR_PAIR(2));
-            mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), C1);
-            attroff(COLOR_PAIR(2));
+
         }
+        attron(COLOR_PAIR(2));
+        mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), "%c",C1);
+        attroff(COLOR_PAIR(2));
     }else if (C1 == 'B' || C1 == 'b') {
         while(suma > 0){
             if(P1[pSelect]->getVuelta() >= 0 && P1[pSelect]->getVuelta()<14 && P1[pSelect]->zonaFinal() == false){
@@ -316,10 +318,11 @@ void validacionesJ1(vector<Pieza*> P1, char C1) {
             P1[pSelect]->setVuelta(P1[pSelect]->getVuelta()+1);
 
             suma--;
-            attron(COLOR_PAIR(4));
-            mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), C1);
-            attroff(COLOR_PAIR(4));
+
         }
+        attron(COLOR_PAIR(4));
+        mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), "%c",C1);
+        attroff(COLOR_PAIR(4));
     }else if (C1 == 'Y' || C1 == 'y') {
         while(suma > 0){
             if(P1[pSelect]->getVuelta() >= 0 && P1[pSelect]->getVuelta()<14 && P1[pSelect]->zonaFinal() == false){
@@ -348,8 +351,10 @@ void validacionesJ1(vector<Pieza*> P1, char C1) {
             }
             P1[pSelect]->setVuelta(P1[pSelect]->getVuelta()+1);
             suma--;
-            attron(COLOR_PAIR(5));
-            mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), C1);
-            attroff(COLOR_PAIR(5));
+
         }
+        attron(COLOR_PAIR(5));
+        mvprintw(P1[pSelect]->getPosX(), P1[pSelect]->getPosY(), "%c",C1);
+        attroff(COLOR_PAIR(5));
+}
 }
